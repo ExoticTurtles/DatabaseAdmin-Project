@@ -7,7 +7,6 @@ const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const catchAsync = require("./utils/catchAsync");
 
-
 mongoose.connect('mongodb://localhost:27017/TXkennels', {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -20,14 +19,25 @@ db.once("open", () =>{
 });
 
 const app = express();
+app.use(express.static(__dirname + '/views'));
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'))
 
 
+
 app.get('/', (req, res) => {
-    res.render('home');
+    res.render('../interfaces/index');
 })
+
+app.get('/login',  async (req, res) => {
+    res.render('../interfaces/login');
+})
+
+app.get('/register',  async (req, res) => {
+    res.render('../interfaces/register');
+})
+
 
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
