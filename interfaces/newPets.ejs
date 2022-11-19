@@ -1,0 +1,46 @@
+<% layout('layouts/boilerplate') %>
+<section class="vh-100 mt-md-6">
+<form class="m-3" action="/pets/new" method="POST">
+  <main class='container mt-5'>
+    <div class="form-row" id="contenedor">
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">Nombre de la mascota</label>
+        <input type="text" class="form-control" name="name" id="inputEmail4" placeholder="Nombre">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputPassword4">Raza</label>
+        <input type="text" class="form-control" name="raza" id="inputPassword4" placeholder="Raza">
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label" for="image">Liga de la imagen</label>
+      <input class="form-control" type="text" id="image" name="image" name="campground[image]" required>
+      <div class="valid-feedback">
+          Looks good!
+      </div>
+      
+  </div>
+    <div class="mb-3">
+      <label class="form-label" for="price">Price tag</label>
+      <div class="input-group">
+      
+        <span class="input-group-text" id="price-label">$</span>
+      <input type="text" class="form-control" name="precio" placeholder="0.00" id="price" aria-label="Price" aria-describedby="price-label">
+      <div class="valid-feedback">
+          Looks good!
+      </div>
+      </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="description">Descripción</label>
+        <textarea class="form-control" type="text" name="description" id="description"></textarea>
+        <div class="valid-feedback">
+            ¡Valído!
+        </div>
+        
+    </div>
+    <button type="submit" class="btn btn-primary">Sign in</button>
+  </form>
+</main>
+</section>

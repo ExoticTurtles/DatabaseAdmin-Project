@@ -8,6 +8,7 @@ const ejsMate = require('ejs-mate');
 const catchAsync = require("./utils/catchAsync");
 const { emitWarning } = require('process');
 const User = require('./models/user')
+const Pets = require('./models/pets')
 const bcrypt = require('bcrypt');
 const { Hash } = require('crypto');
 const session = require('express-session')
@@ -33,6 +34,13 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
+
+app.use((req, res, next) =>{
+    res.locals.currentUser = req.session.user_id;
+    res.locals.Username = req.session.username;
+    console.log(req.currentUser)
+    next();
+})
 
 const requireLogin = (req, res, next) => {
     if (!req.session.user_id){
@@ -66,6 +74,7 @@ app.post('/register', async (req,res) => {
 
 })
 
+
 app.get('/login',  async (req, res) => {
     res.render('../interfaces/login');
 })
@@ -75,6 +84,9 @@ app.post('/login', async (req,res) => {
     const foundUser = await User.findAndValidate(email, password);
     if(foundUser){
         req.session.user_id = foundUser._id;
+        req.session.username = foundUser.username;
+        req.session.email = foundUser.email;
+
         res.redirect('/');
     }
     else{
@@ -83,16 +95,40 @@ app.post('/login', async (req,res) => {
 })
 
 app.get('/pets',  async (req, res) => {
-    res.render('../interfaces/mascotas');
+    res.render('../interfaces/pets');
 })
+
+app.get('/pets/new',  async (req, res) => {
+    res.render('../interfaces/newPets');
+})
+
+app.post('/pets/new', async (req,res) => {
+    const {name, raza, image, price, description} = req.body;
+    const pets = new Pets({
+        name,
+        raza,
+        image, 
+        price,
+        description
+    })
+    await pets.save();
+    res.redirect('/pets')
+
+})
+
 
 app.get('/products',  async (req, res) => {
     res.render('../interfaces/products');
 })
 
+app.get('/logout', (req, res) =>{
+    req.session.user_id = null;
+    res.redirect('/')
+})
+
 app.post('/logout', (req, res) =>{
     req.session.user_id = null;
-    res.redirect('/index')
+    res.redirect('/')
 })
 
 app.get('/secret', requireLogin, (req, res) => {

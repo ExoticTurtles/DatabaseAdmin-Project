@@ -30,6 +30,14 @@ img{
     background-image: url("https://www.transparenttextures.com/patterns/argyle.png");
 }
 
+#contenedor{
+    color: #8c6d52;
+    font-size: 1.5rem;
+    font-weight: 100;
+    background-color: #d6cf7e;
+    background-image: url("https://www.transparenttextures.com/patterns/60-lines.png");
+}
+
 #navLinks{
     color: black 
 }

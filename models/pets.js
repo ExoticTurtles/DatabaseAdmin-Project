@@ -1,29 +1,21 @@
 const mongoose = require('mongoose');
-const Review = require("./review")
 const Schema = mongoose.Schema;
 
-const CampgroundSchema = new Schema({
-    title: String,
-    image: String,
+const petsSchema = new mongoose.Schema({
+    name:{
+        type: String,
+        required: [true, 'El nombre de la mascota no puede ser nulo.']
+    },
+    raza:{
+        type: String,
+        required: [true, 'El nombre de la raza no puede ser nulo.']
+    },
+    image:{
+        type: String,
+        required: [true, 'La imagen debe existir.']
+    },
     price: Number,
-    description: String,
-    location: String,
-    reviews: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Review"
-        }
-    ]
-});
-
-CampgroundSchema.post("findOneAndDelete", async function (doc) {
-    if(doc){
-        await Review.remove({
-            _id:{
-                $in: doc.reviews
-            }
-        })
-    }
+    description: String
 })
 
-module.exports = mongoose.model('Campground', CampgroundSchema);
+module.exports = mongoose.model('Pets', petsSchema);
