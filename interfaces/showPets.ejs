@@ -1,0 +1,38 @@
+<% layout('layouts/boilerplate') %> 
+
+<div class="productos">
+    <div class="row align-items-center">
+        <div class="col-md-6 row justify-content-center">
+            <h2 href="#!">Mascotas</h2>
+        </div>
+        <div class="col-md-6 row justify-content-center">
+            <img class="big-icon" src="images/resources/huella.png" alt="">
+        </div>
+    </div>
+    <hr class="solid">
+</div>
+<div>
+    <a href="/campgrounds/new">Add campgrounds</a>
+    
+</div>
+    <% for (let pet of pets){ %> 
+        <div class="card mb-3">
+            <div class="row">
+            <div class="col-md-4">
+                <img class="img-fluid" alt="" src="<%=pet.image%>">
+                </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title"><%= pet.name%></h5>
+                <p class="card-text"><%=pet.description%></p>
+                <p class="card-text">
+                    <small class="text-muted"><%=pet.raza%></small>
+                </p>
+                <a class="btn btn-primary" href="/">Agendar una cita</a>
+            </div>
+        </div>
+</div>
+</div>
+        </div>
+    <%}  %> 
+ 

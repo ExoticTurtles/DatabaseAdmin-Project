@@ -2,7 +2,7 @@
 <div class="productos">
   <div class="row align-items-center">
       <div class="col-md-6 row justify-content-center">
-          <h2 href="#!">Mascotas</h2>
+          <h2 href="#!">Productos</h2>
       </div>
       <div class="col-md-6 row justify-content-center">
           <img class="big-icon" src="images/resources/huella.png" alt="">
@@ -11,16 +11,16 @@
   <hr class="solid">
 </div>
 <section class="vh-100 mt-md-6">
-<form class="m-3" action="/pets/new" method="POST">
+<form class="m-3" action="/products/new" method="POST">
   <main class='container mt-5'>
     <div class="form-row" id="contenedor">
       <div class="form-group col-md-6">
-        <label for="inputEmail4">Nombre de la mascota</label>
+        <label for="inputEmail4">Nombre del producto</label>
         <input type="text" class="form-control" name="name" id="inputEmail4" placeholder="Nombre">
       </div>
       <div class="form-group col-md-6">
-        <label for="inputPassword4">Raza</label>
-        <input type="text" class="form-control" name="raza" id="inputPassword4" placeholder="Raza">
+        <label for="inputPassword4">Unidades</label>
+        <input type="number" class="form-control" name="quantity" id="inputPassword4" placeholder="Raza">
       </div>
     </div>
 
@@ -33,11 +33,10 @@
       
   </div>
     <div class="mb-3">
-      <label class="form-label" for="price">Price tag</label>
+      <label class="form-label" for="price">Precio en pesos Mexicános</label>
       <div class="input-group">
-      
         <span class="input-group-text" id="price-label">$</span>
-      <input type="text" class="form-control" name="precio" placeholder="0.00" id="price" aria-label="Price" aria-describedby="price-label">
+      <input type="text" class="form-control" name="price" placeholder="0.00" id="price" aria-label="Price" aria-describedby="price-label">
       <div class="valid-feedback">
           Looks good!
       </div>

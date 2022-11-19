@@ -9,6 +9,8 @@ const catchAsync = require("./utils/catchAsync");
 const { emitWarning } = require('process');
 const User = require('./models/user')
 const Pets = require('./models/pets')
+const Products = require('./models/products')
+
 const bcrypt = require('bcrypt');
 const { Hash } = require('crypto');
 const session = require('express-session')
@@ -95,7 +97,9 @@ app.post('/login', async (req,res) => {
 })
 
 app.get('/pets',  async (req, res) => {
-    res.render('../interfaces/pets');
+    const pets = await Pets.find({});
+    res.render('../interfaces/showPets', {pets});
+
 })
 
 app.get('/pets/new',  async (req, res) => {
@@ -117,9 +121,31 @@ app.post('/pets/new', async (req,res) => {
 })
 
 
+
+
 app.get('/products',  async (req, res) => {
-    res.render('../interfaces/products');
+    const products = await Products.find({});
+    res.render('../interfaces/showProducts', {products});
 })
+
+app.get('/products/new',  async (req, res) => {
+    res.render('../interfaces/newProducts');
+})
+
+app.post('/products/new', async (req,res) => {
+    const {name, quantity, image ,price, description} = req.body;
+    const products = new Products({
+        name,
+        quantity,
+        image,
+        price,
+        description
+    })
+    await products.save();
+    res.redirect('/products')
+
+})
+
 
 app.get('/logout', (req, res) =>{
     req.session.user_id = null;

@@ -1,0 +1,36 @@
+<% layout('layouts/boilerplate') %> 
+<div class="productos">
+    <div class="row align-items-center">
+        <div class="col-md-6 row justify-content-center">
+            <h2 href="#!">Productos</h2>
+        </div>
+        <div class="col-md-6 row justify-content-center">
+            <img class="big-icon" src="images/resources/huella.png" alt="">
+        </div>
+    </div>
+    <hr class="solid">
+</div>
+<div>
+    <a href="/campgrounds/new">Add campgrounds</a>
+    
+</div>
+    <% for (let product of products){ %> 
+        <div class="card mb-3">
+            <div class="row">
+            <div class="col-md-4">
+                <img class="img-fluid" alt="" src="<%=product.image%>">
+                </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title"><%= product.name%></h5>
+                <p class="card-text"><%=product.description%></p>
+                <p class="card-text"><%=product.quantity%></p>
+                <p class="card-text">
+                    <small class="text-muted"><%=product.price%></small>
+                </p>
+            </div>
+        </div>
+</div>
+</div>
+        </div>
+    <%}  %> 
