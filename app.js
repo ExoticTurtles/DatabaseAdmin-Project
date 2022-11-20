@@ -44,6 +44,17 @@ app.use((req, res, next) =>{
     next();
 })
 
+const validateProduct = ( req, res, next) =>{
+    const {error}  = productSchema.validate(req.body);
+    if(error){
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg , 400)
+    } else{
+        next();
+    }
+
+}
+
 const requireLogin = (req, res, next) => {
     if (!req.session.user_id){
         return res.redirect('/login')
@@ -146,6 +157,23 @@ app.post('/products/new', async (req,res) => {
 
 })
 
+
+app.put('/products/:id', catchAsync( async (req, res) => {
+    const {id} = req.params;
+    const product = await Products.findByIdAndUpdate(id, {...req.body.product})
+    res.redirect('/products')
+}));
+
+app.get('/products/:id/edit',  catchAsync( async (req, res) => {
+    const product = await Products.findById(req.params.id);
+    res.render('../interfaces/editProducts', {product});
+}));
+
+app.delete('/products/:id/delete',  catchAsync( async (req, res) => {
+    const {id} = req.params;
+    await Products.findByIdAndDelete(id);
+    res.redirect('/products');
+}));
 
 app.get('/logout', (req, res) =>{
     req.session.user_id = null;

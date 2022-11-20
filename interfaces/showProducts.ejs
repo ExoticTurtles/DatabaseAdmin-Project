@@ -11,10 +11,11 @@
     <hr class="solid">
 </div>
 <div>
-    <a href="/campgrounds/new">Add campgrounds</a>
+    <a href="/products/new" class="text-center btn btn-primary justify-content-center m-3">Añadir nuevo producto.</a>
     
 </div>
-    <% for (let product of products){ %> 
+    <% for (let product of products){ %>
+        <div class="container">
         <div class="card mb-3">
             <div class="row">
             <div class="col-md-4">
@@ -22,15 +23,32 @@
                 </div>
         <div class="col-md-8">
             <div class="card-body">
-                <h5 class="card-title"><%= product.name%></h5>
-                <p class="card-text"><%=product.description%></p>
-                <p class="card-text"><%=product.quantity%></p>
-                <p class="card-text">
-                    <small class="text-muted"><%=product.price%></small>
-                </p>
+                <div class="row align-items-center">
+                    <h3 class="card-title">Nombre: <%= product.name%></h3>
+                </div>
+                <hr class="solid">
+                <h5 class="card-text">Unidades disponibles: <%=product.quantity%></h5>
+                <h5 class="card-text">Precio: <%=product.price%></h5>
+                <hr class="solid">
+                <h4 class="card-text text-center">Descripción:</ph4>
+                <h5 class="card-text"><%=product.description%></h5>
+                <div class="container">
+                <div class="row align-items-center text-center">
+                    
+                    <div class="col-md-4 text-center align-items-center">
+                        <a href="/products/<%=product._id%>/edit" class="btn btn-secondary text-center">Editar producto</a>
+                    </div>
+                    <div class="col-md-4 text-center align-items-center">
+                        <form class="d-inline" action="/products/<%=product._id%>/delete?_method=DELETE" method="POST">
+                            <button  class="btn btn-danger text-center">Borrar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+                
             </div>
         </div>
 </div>
 </div>
-        </div>
+</div>
     <%}  %> 
