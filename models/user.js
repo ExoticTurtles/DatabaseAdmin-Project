@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
         required: [true, 'La contraseña no puede ser nulo.']
+    },
+    role:{
+        type: Number,
+        require: [true, 'El rol no puede ser nulo.']
     }
 
 })

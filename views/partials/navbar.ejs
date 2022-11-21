@@ -1,28 +1,29 @@
-<nav id="mainNavbar" class="navbar navbar-dark navbar-expand-md py-0 fixed-top" aria-label="Toggle navigation">
-    <a href="NA" class="navbar-brand">KENNELS TX</a>
+<nav id="mainNavbar" class="navbar navbar-dark navbar-expand-md py-0 fixed-top p-3" aria-label="Toggle navigation">
+    <a href="/" class="navbar-brand">KENNELS TX</a>
     <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navLinks">
+    <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navLinks">
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a href="/" class="nav-link">Inicio</a>
             </li>
             <li class="nav-item">
-                <a href="/pets" class="nav-link">Mascotas</a>
-            </li>
-            <li class="nav-item">
                 <a href="/products" class="nav-link">Productos</a>
             </li>
-            <%if(!currentUser){%>
+            <%if(typeof currUser === 'undefined'){%>
+                
                 <li class="nav-item">
                     <a href="/login" class="nav-link">Inicio de sesión</a>
                 </li>
-            <%}else{ %>
+            <%}else{%>
+                <li class="nav-item">
+                    <a href="/pets" class="nav-link">Mascotas</a>
+                </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                         aria-haspopup="true" aria-expanded="false">
-                        <%Username%>
+                        <%=currUser.username%>
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="/citas">Citas</a>

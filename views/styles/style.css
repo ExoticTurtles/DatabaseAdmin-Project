@@ -13,7 +13,27 @@ button{
 }
 
 #img{
+    filter: drop-shadow(6px 6px 5px gray);
+}
+
+#img:hover{
     filter: drop-shadow(16px 16px 10px gray);
+    transition: 500ms;
+}
+
+#registerbtn{
+    background-color: #4f3824;
+    background-image: url("https://www.transparenttextures.com/patterns/argyle.png");
+    color: #B4A9AE;
+    border-radius: 10px;
+}
+
+#registerbtn:hover{
+    color: rgb(241, 239, 141);
+    transition: 500ms;
+    filter: drop-shadow(16px 16px 10px gray);
+
+
 }
 
 #mainFooter{
@@ -70,6 +90,11 @@ button{
     display: block;
 }
 
+.big-icon{
+    height: 40px;
+    width: 40px;
+}
+
 .blurb h2{
     color: black;
     font-weight: 100;
@@ -92,6 +117,14 @@ button{
     transition: 500ms;
     border-bottom: 5px solid rgb(241, 239, 141);
 }
+
+.icon {
+    height: 20px;
+    width: 20px;
+    display: block;
+
+}
+
 
 @media (max-width: 1200px){
     #headingGroup h1{

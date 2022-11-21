@@ -1,0 +1,57 @@
+<% layout('layouts/boilerplate') %>
+<div class="productos">
+  <div class="row align-items-center">
+      <div class="col-md-6 row justify-content-center">
+          <h2 href="#!">Mascotas</h2>
+      </div>
+      <div class="col-md-6 row justify-content-center">
+          <img class="big-icon" src="images/resources/huella.png" alt="">
+      </div>
+  </div>
+  <hr class="solid">
+</div>
+<section class="vh-100 mt-md-6">
+<form action="/pets/<%=pet._id%>?_method=PUT" method="POST" novalidate class="validated-form">
+    <main class='container mt-5'>
+        <div class="form-row" id="contenedor">
+          <div class="form-group col-md-6">
+            <label for="inputEmail4">Nombre de la mascota</label>
+            <input type="text" class="form-control" name="pet[name]" id="inputEmail4" placeholder="Nombre" value="<%=pet.name%>"required>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">Raza</label>
+            <input type="text" class="form-control" name="pet[raza]" id="inputPassword4" placeholder="Raza" value="<%=pet.raza%>"required>
+          </div>
+        </div>
+    
+        <div class="mb-3">
+          <label class="form-label" for="image">Liga de la imagen</label>
+          <input class="form-control" type="text" id="image" name="pet[image]" value="<%=pet.image%>"required>
+          <div class="valid-feedback">
+              Looks good!
+          </div>
+          
+      </div>
+        <div class="mb-3">
+          <label class="form-label" for="price">Price tag</label>
+          <div class="input-group">
+          
+            <span class="input-group-text" id="price-label">$</span>
+          <input type="text" class="form-control" name="pet[price]" placeholder="0.00" id="price" aria-label="Price" aria-describedby="price-label" value="<%=pet.price%>"required>
+          <div class="valid-feedback">
+              Looks good!
+          </div>
+          </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="description">Descripción</label>
+            <textarea class="form-control" type="text" name="pet[description]" id="description" value="<%=pet.description%>"required></textarea>
+            <div class="valid-feedback">
+                ¡Valído!
+            </div>
+            
+        </div>
+        <button type="submit" class="btn btn-primary">Sign in</button>
+      </form>
+    </main>
+</section>

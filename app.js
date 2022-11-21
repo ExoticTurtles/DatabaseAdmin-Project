@@ -37,12 +37,14 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
-app.use((req, res, next) =>{
+
+app.use(catchAsync(async (req, res, next) =>{
     res.locals.currentUser = req.session.user_id;
-    res.locals.Username = req.session.username;
-    console.log(req.currentUser)
+    if(res.locals.currentUser){
+        res.locals.currUser = await User.findById(res.locals.currentUser);
+    }
     next();
-})
+}));
 
 const validateProduct = ( req, res, next) =>{
     const {error}  = productSchema.validate(req.body);
@@ -52,6 +54,15 @@ const validateProduct = ( req, res, next) =>{
     } else{
         next();
     }
+
+}
+
+
+const loggedIn = (req, res, next) => {
+    if (req.session.user_id){
+        return res.redirect('/')
+    }
+    next();
 
 }
 
@@ -72,14 +83,15 @@ app.get('/register',  async (req, res) => {
     res.render('../interfaces/register');
 })
 
-app.post('/register', async (req,res) => {
+app.post('/register', loggedIn, async (req,res) => {
     const {email, username, number, password} = req.body;
     const hash = await bcrypt.hash(password, 12)
     const user = new User({
         email,
         username, 
         number,
-        password: hash
+        password: hash,
+        role: 1
     })
     await user.save();
     req.session.user_id = user._id;
@@ -88,11 +100,11 @@ app.post('/register', async (req,res) => {
 })
 
 
-app.get('/login',  async (req, res) => {
+app.get('/login', loggedIn,  async (req, res) => {
     res.render('../interfaces/login');
 })
 
-app.post('/login', async (req,res) => {
+app.post('/login', loggedIn, async (req,res) => {
     const {email, password} = req.body;
     const foundUser = await User.findAndValidate(email, password);
     if(foundUser){
@@ -107,17 +119,17 @@ app.post('/login', async (req,res) => {
     }
 })
 
-app.get('/pets',  async (req, res) => {
+app.get('/pets', requireLogin,  async (req, res) => {
     const pets = await Pets.find({});
     res.render('../interfaces/showPets', {pets});
 
 })
 
-app.get('/pets/new',  async (req, res) => {
+app.get('/pets/new', requireLogin,  async (req, res) => {
     res.render('../interfaces/newPets');
 })
 
-app.post('/pets/new', async (req,res) => {
+app.post('/pets/new', requireLogin, async (req,res) => {
     const {name, raza, image, price, description} = req.body;
     const pets = new Pets({
         name,
@@ -131,7 +143,22 @@ app.post('/pets/new', async (req,res) => {
 
 })
 
+app.put('/pets/:id', requireLogin, catchAsync( async (req, res) => {
+    const {id} = req.params;
+    const pet = await Pets.findByIdAndUpdate(id, {...req.body.pet})
+    res.redirect('/pets')
+}));
 
+app.get('/pets/:id/edit', requireLogin,  catchAsync( async (req, res) => {
+    const pet = await Pets.findById(req.params.id);
+    res.render('../interfaces/editPets', {pet});
+}));
+
+app.delete('/pets/:id/delete',  requireLogin, catchAsync( async (req, res) => {
+    const {id} = req.params;
+    await Pets.findByIdAndDelete(id);
+    res.redirect('/pets');
+}));
 
 
 app.get('/products',  async (req, res) => {
@@ -139,11 +166,11 @@ app.get('/products',  async (req, res) => {
     res.render('../interfaces/showProducts', {products});
 })
 
-app.get('/products/new',  async (req, res) => {
+app.get('/products/new', requireLogin,  async (req, res) => {
     res.render('../interfaces/newProducts');
 })
 
-app.post('/products/new', async (req,res) => {
+app.post('/products/new', requireLogin, async (req,res) => {
     const {name, quantity, image ,price, description} = req.body;
     const products = new Products({
         name,
@@ -158,18 +185,18 @@ app.post('/products/new', async (req,res) => {
 })
 
 
-app.put('/products/:id', catchAsync( async (req, res) => {
+app.put('/products/:id', requireLogin, catchAsync( async (req, res) => {
     const {id} = req.params;
     const product = await Products.findByIdAndUpdate(id, {...req.body.product})
     res.redirect('/products')
 }));
 
-app.get('/products/:id/edit',  catchAsync( async (req, res) => {
+app.get('/products/:id/edit', requireLogin,  catchAsync( async (req, res) => {
     const product = await Products.findById(req.params.id);
     res.render('../interfaces/editProducts', {product});
 }));
 
-app.delete('/products/:id/delete',  catchAsync( async (req, res) => {
+app.delete('/products/:id/delete', requireLogin,  catchAsync( async (req, res) => {
     const {id} = req.params;
     await Products.findByIdAndDelete(id);
     res.redirect('/products');

@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') %> 
 
-<div class="productos">
+<div class="productos p-3">
     <div class="row align-items-center">
         <div class="col-md-6 row justify-content-center">
             <h2 href="#!">Mascotas</h2>
@@ -11,25 +11,36 @@
     </div>
     <hr class="solid">
 </div>
+
 <div>
-    <a href="/campgrounds/new">Add campgrounds</a>
-    
+    <a href="/pets/new" class="text-center btn btn-primary justify-content-center m-3">Añadir nueva mascota.</a>
 </div>
+
     <% for (let pet of pets){ %> 
-        <div class="card mb-3">
+        <div class="card mb-3 " id="img">
             <div class="row">
             <div class="col-md-4">
                 <img class="img-fluid" alt="" src="<%=pet.image%>">
                 </div>
         <div class="col-md-8">
             <div class="card-body">
-                <h5 class="card-title"><%= pet.name%></h5>
-                <p class="card-text"><%=pet.description%></p>
-                <p class="card-text">
-                    <small class="text-muted"><%=pet.raza%></small>
-                </p>
-                <a class="btn btn-primary" href="/">Agendar una cita</a>
-            </div>
+                <div class="row align-items-center">
+                    <h3 class="card-title"><b>Apodo:</b> <%= pet.name%></h3>
+                </div>
+                <hr class="solid">
+                
+                <h5 class="card-text"><b>Descripción del cachorro:</b> <%=pet.description%></h5>
+                <h5 class="card-text"><b>Raza: </b><%=pet.raza%></h5>
+                <h6 class="card-text"><b>Precio: </b><%=pet.price%></h6>
+                <hr class="solid">
+                <a class="btn btn-success" href="/">Agendar una cita</a>
+
+
+                <a href="/pets/<%=pet._id%>/edit" class="btn btn-secondary text-center">Editar datos</a>
+                    <form class="d-inline" action="/pets/<%=pet._id%>/delete?_method=DELETE" method="POST">
+                        <button  class="btn btn-danger text-center">Borrar registro</a>
+                    </form>
+
         </div>
 </div>
 </div>

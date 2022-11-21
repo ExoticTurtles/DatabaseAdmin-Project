@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate') %> 
-<section class="vh-100 mt-md-6">
+<section class="vh-100 d-flex p-2">
     <div class="container-fluid h-custom">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-md-9 col-lg-6 col-xl-5">
@@ -7,14 +7,14 @@
             class="img-fluid" alt="Sample image" id="img">
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+          <h2 class="text-center p-3 ">¡iniciar sesión!</h2>
           <form action="/login" method="POST">
             <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-              <p class="lead fw-normal mb-0 me-3">Iniciar sesiòn!</p>
             </div>
   
             <!-- Email input -->
             <div class="form-outline mb-4">
-              <label class="form-label"  id="email-label" for="email">Correo electronico</label>
+              <label class="form-label"  id="email-label" for="email">Correo eléctronico</label>
               <input type="email" id="email" name="email" class="form-control form-control-lg"
                 placeholder="Ingrese un correo electronico" required/>
             </div>
@@ -30,6 +30,9 @@
             <div class="text-center text-lg-start mt-4 pt-2">
               <button class="btn btn-lg"
                 style="padding-left: 2.5rem; padding-right: 2.5rem;">Iniciar</button>
+            </div>
+            <div class="text-center text-lg-start mt-4 pt-2">
+              <a href="/register" class="btn btn-primmary">¿No tienes cuenta? Regístrate</a>
             </div>
   
           </form>
