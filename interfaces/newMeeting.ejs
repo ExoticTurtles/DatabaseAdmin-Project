@@ -1,0 +1,46 @@
+<% layout('layouts/boilerplate') 
+%> 
+
+
+<div class="container p-3">
+<div class="card mb-3 p-3 d-flex" id="img">
+    <div class="row">
+    <div class="col-md-4">
+        <img class="img-fluid" alt="" src="<%=pet.image%>">
+        </div>
+<div class="col-md-8">
+    <div class="card-body">
+        <div class="row align-items-center">
+            <h3 class="card-title"><b>Apodo:</b> <%= pet.name%></h3>
+        </div>
+        <hr class="solid">
+        
+        <h5 class="card-text"><b>Descripción del cachorro:</b> <%=pet.description%></h5>
+        <h5 class="card-text"><b>Raza: </b><%=pet.raza%></h5>
+        <h6 class="card-text"><b>Precio: </b><%=pet.price%></h6>
+        <hr class="solid">
+        <hr class="solid">
+        <form class="m-3" action="/meeting/<%=pet._id%>" method="POST">
+            <div class="mb-3">
+                <label class="form-label" for="description">Fecha tentativa de la cita:</label>
+                <input type="date" class="form-control" name="date" id="datePickerId">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="description">Mencione brevemente el motivo de su cita: </label>
+                <textarea class="form-control" type="text" name="description" id="description"></textarea>
+                <div class="valid-feedback">
+                    ¡Valído!
+                </div>
+                
+            </div>
+            <button class="btn btn-primary">Agendar</a>
+        </form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+    datePickerId.min = new Date().toISOString().split("T")[0];
+</script>

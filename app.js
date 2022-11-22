@@ -9,6 +9,8 @@ const catchAsync = require("./utils/catchAsync");
 const { emitWarning } = require('process');
 const User = require('./models/user')
 const Pets = require('./models/pets')
+const Meetings  = require('./models/meetings')
+
 const Products = require('./models/products')
 
 const bcrypt = require('bcrypt');
@@ -91,7 +93,7 @@ app.post('/register', loggedIn, async (req,res) => {
         username, 
         number,
         password: hash,
-        role: 1
+        role: 2
     })
     await user.save();
     req.session.user_id = user._id;
@@ -200,6 +202,47 @@ app.delete('/products/:id/delete', requireLogin,  catchAsync( async (req, res) =
     const {id} = req.params;
     await Products.findByIdAndDelete(id);
     res.redirect('/products');
+}));
+
+app.get('/meeting',  async (req, res) => {
+    const products = await Products.find({});
+    res.render('../interfaces/showProducts', {products});
+})
+
+app.get('/meeting/:id', requireLogin, catchAsync( async (req, res) => {
+    const pet = await Pets.findById(req.params.id);
+    res.render('../interfaces/newMeeting', {pet});
+}));
+
+app.post('/meeting/:id', requireLogin, async (req,res) => {
+    const {id} = req.params;
+    const user = await User.findById(req.session.user_id);
+    const {date, description} = req.body;
+    const meetings = new Meetings({
+        date,
+        description,
+        status: "Pendiente",
+        petID: id, 
+        userID: req.session.user_id
+    })
+    user.meetings.push(meetings);
+    await user.save();
+    await meetings.save();
+    res.redirect('/pets')
+
+})
+
+app.get('/showMeetings', requireLogin, catchAsync( async (req, res) => {
+    const meetings = await Meetings.find({}).populate(["userID", "petID"])
+    console.log(meetings)
+    res.render('../interfaces/showMeetings', {meetings});
+}));
+
+app.put('/showMeetings/:id', requireLogin, catchAsync( async (req, res) => {
+    const {id} = req.params;
+    const meeting = await Meetings.findByIdAndUpdate(id, {...req.body.meeting})
+    res.redirect('/showMeetings')
+
 }));
 
 app.get('/logout', (req, res) =>{

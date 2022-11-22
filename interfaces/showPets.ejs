@@ -12,8 +12,11 @@
     <hr class="solid">
 </div>
 
-<div>
-    <a href="/pets/new" class="text-center btn btn-primary justify-content-center m-3">Añadir nueva mascota.</a>
+<div class="p-3">
+    <%if(typeof currUser !== 'undefined'){
+        if(currUser.role == 1){%>
+            <a href="/pets/new" class="text-center btn btn-primary justify-content-center m-3">Añadir una nueva mascota.</a>
+    <%}}%>
 </div>
 
     <% for (let pet of pets){ %> 
@@ -33,13 +36,18 @@
                 <h5 class="card-text"><b>Raza: </b><%=pet.raza%></h5>
                 <h6 class="card-text"><b>Precio: </b><%=pet.price%></h6>
                 <hr class="solid">
-                <a class="btn btn-success" href="/">Agendar una cita</a>
+                <a class="btn btn-success" href="/meeting/<%=pet._id%>">Agendar una cita</a>
 
-
-                <a href="/pets/<%=pet._id%>/edit" class="btn btn-secondary text-center">Editar datos</a>
+                <%if(typeof currUser !== 'undefined'){
+        if(currUser.role == 1){%>
+            <a href="/pets/<%=pet._id%>/edit" class="btn btn-secondary text-center">Editar datos</a>
                     <form class="d-inline" action="/pets/<%=pet._id%>/delete?_method=DELETE" method="POST">
                         <button  class="btn btn-danger text-center">Borrar registro</a>
                     </form>
+    <%}
+    
+}%>
+
 
         </div>
 </div>

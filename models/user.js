@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const Meetings = require("./meetings")
 
 const userSchema = new mongoose.Schema({
     email:{
@@ -21,7 +22,13 @@ const userSchema = new mongoose.Schema({
     role:{
         type: Number,
         require: [true, 'El rol no puede ser nulo.']
-    }
+    },
+    meetings: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Meetings"
+        }
+    ]
 
 })
 

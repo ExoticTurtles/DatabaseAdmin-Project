@@ -26,7 +26,12 @@
                         <%=currUser.username%>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/citas">Citas</a>
+                        <%if(typeof currUser !== 'undefined'){
+                            if(currUser.role == 1){%>
+                            <a class="dropdown-item" href="/showMeetings">Administrar citas</a>
+                        <%}else{%>
+                        <a class="dropdown-item" href="/meetings">Citas</a>
+                        <%}}%>
                         <a class="dropdown-item" href="/logout">Cerrar sesión</a>
                     </div>
                 </li>
