@@ -11,9 +11,14 @@
   <hr class="solid">
 </div>
 
-    <% for (let meeting of meetings){ %>
+    <% for (let meeting of meetings){ 
+                    console.log(currUser._id)
+            console.log(meeting.userID._id)
+            remUser = meeting.userID._id.toString()
+            locUser = currUser._id.toString()
+        if(remUser == locUser){
+            %>
     <div class="card mb-3 p-3 " id="img">
-<form action="/showMeetings/<%= meeting._id%>?_method=PUT" method="POST" novalidate class="validated-form" class="p-3">
   <main class='container mt-5'>
 
     <div class="row">
@@ -30,46 +35,31 @@
           <h5 class="card-text"><b>Descripción del cachorro:</b> <%=meeting.petID.description%></h5>
           <h5 class="card-text"><b>Raza: </b><%=meeting.petID.raza%></h5>
           <h6 class="card-text"><b>Precio: </b><%=meeting.petID.price%></h6>
+          <h3 name="meeting[userID.username]"><b>Responsable de la solicitud:</b> <%=meeting.userID.username%></h3>
           <hr class="solid">
-          <div class="row align-items-center">
-            <h3 name="meeting[userID.username]"><b>Responsable de la solicitud:</b> <%=meeting.userID.username%></h3>
-        </div>
         <hr class="solid">
-
-        <h5 class="card-text"><b>Correo electrónico: </b> <%=meeting.userID.email%></h5>
-        <h5 class="card-text"><b>Numero telefónico: </b><%=meeting.userID.number%></h5>
-
 
     </div>
     </div>
     <hr class="solid">
-    <div class="form-row" id="contenedor">
-      <div class="form-group col-md-6">
-        <label for="inputPassword4">Fecha de la cita: </label>
-        <input type="date" class="form-control" name="meeting[date]" id="datePickerId" value="<%=meeting.date.toISOString().split("T")[0]%>" required>
-      </div>
-    </div>
 
     <div class="mb-3">
       <p class="pt-3" name="meeting[description]">Contenido de la solicitud: <%=meeting.description%></p>
   </div>
+
+  <div class="mb-3">
+    <p class="pt-3" name="meeting[description]">Fecha de la cita: <%=meeting.date.toISOString().split("T")[0]%></p>
+</div>
+
     <div class="mb-3">
-        <select class="form-select" name="meeting[status]" aria-label="Default select example" required>
-          <option value="" disabled selected><%=meeting.status%></option>
-            <option value="Pendiente">Pendiente</option>
-            <option value="Aprobada">Aprobada</option>
-            <option value="Rechazada">Rechazada</option>
-          </select>
+        <p class="pt-3" name="meeting[description]">Status de la solicitud: <%=meeting.status%></p>
     </div>
     </div>
-    
-    <button type="submit" class="btn btn-primary m-3">Actualizar</button>
-    <form class="d-inline" action="/showMeetings/<%=meeting._id%>/delete?_method=DELETE" method="POST">
+  <form class="d-inline" action="/meetings/<%=meeting._id%>?_method=DELETE" method="POST">
       <button  class="btn btn-danger text-center">Borrar registro</a>
   </form>
-  </form>
 </div>
-<% } %> 
+<% }} %> 
 
 
  

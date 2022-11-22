@@ -232,11 +232,35 @@ app.post('/meeting/:id', requireLogin, async (req,res) => {
 
 })
 
+app.get('/meetings', requireLogin, catchAsync( async (req, res) => {
+    const meetings = await Meetings.find({}).populate(["userID", "petID"])
+    res.render('../interfaces/meetings', {meetings});
+}));
+
+app.delete('/meetings/:id', requireLogin,  catchAsync( async (req, res) => {
+    const {id} = req.params;
+    await Meetings.findByIdAndDelete(id);
+    console.log("boeeE");
+    res.redirect('/');
+}));
+
+
 app.get('/showMeetings', requireLogin, catchAsync( async (req, res) => {
     const meetings = await Meetings.find({}).populate(["userID", "petID"])
     console.log(meetings)
     res.render('../interfaces/showMeetings', {meetings});
 }));
+
+app.delete('/showMeetings/:id/delete', requireLogin,  catchAsync( async (req, res) => {
+    const {id} = req.params;
+    await Meetings.findByIdAndDelete(id);
+    console.log("boeeE")
+    res.redirect('/showMeetings');
+}));
+
+
+
+
 
 app.put('/showMeetings/:id', requireLogin, catchAsync( async (req, res) => {
     const {id} = req.params;
