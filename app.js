@@ -81,7 +81,7 @@ app.get('/', (req, res) => {
 })
 
 
-app.get('/register',  async (req, res) => {
+app.get('/register',  loggedIn, async (req, res) => {
     res.render('../interfaces/register');
 })
 

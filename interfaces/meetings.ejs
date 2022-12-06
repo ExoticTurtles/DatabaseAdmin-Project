@@ -37,23 +37,16 @@
           <h6 class="card-text"><b>Precio: </b><%=meeting.petID.price%></h6>
           <h3 name="meeting[userID.username]"><b>Responsable de la solicitud:</b> <%=meeting.userID.username%></h3>
           <hr class="solid">
+          <h5 class="" name="meeting[description]"><b>Contenido de la solicitud:</b> <%=meeting.description%></h5>
+          <h5 class="" name="meeting[description]"><b>Fecha de la cita: </b><%=meeting.date.toISOString().split("T")[0]%></h5>
         <hr class="solid">
+        <div class="row align-items-center">
+            <h3 class="" name="meeting[description]"><b>Status de la solicitud:</b> <%=meeting.status%></h3>
+          </div>
 
     </div>
     </div>
-    <hr class="solid">
 
-    <div class="mb-3">
-      <p class="pt-3" name="meeting[description]">Contenido de la solicitud: <%=meeting.description%></p>
-  </div>
-
-  <div class="mb-3">
-    <p class="pt-3" name="meeting[description]">Fecha de la cita: <%=meeting.date.toISOString().split("T")[0]%></p>
-</div>
-
-    <div class="mb-3">
-        <p class="pt-3" name="meeting[description]">Status de la solicitud: <%=meeting.status%></p>
-    </div>
     </div>
   <form class="d-inline" action="/meetings/<%=meeting._id%>?_method=DELETE" method="POST">
       <button  class="btn btn-danger text-center">Borrar registro</a>
